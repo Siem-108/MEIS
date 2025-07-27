@@ -627,161 +627,89 @@ window.FreeFinder = {
   cart: CartModule,
   utils: Utils
 };
-// Initialize EmailJS with enhanced security
-(function() {
-  // Initialize with public key and security settings
-  emailjs.init({
-    publicKey: "XMPN1BECultZ3Fyrv",
-    blockHeadless: true,  // Block automated headless browsers
-    limitRate: {
-      id: 'app',         // Identifier for rate limiting
-      throttle: 10000    // 10-second throttle
-    }
-  });
-})();
+// Initialize EmailJS
+emailjs.init("XMPN1BECultZ3Fyrv");
 
-// Fallback loader if EmailJS isn't loaded
-if (typeof emailjs === 'undefined') {
-  console.error('EmailJS is not loaded!');
-  
-  // Dynamically load EmailJS script
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-  
-  script.onload = function() {
-    // Re-initialize after loading
-    emailjs.init({
-      publicKey: "XMPN1BECultZ3Fyrv",
-      blockHeadless: true,
-      limitRate: {
-        id: 'app',
-        throttle: 10000
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('btnText');
+  const btnSpinner = document.getElementById('btnSpinner');
+  const statusMessage = document.getElementById('statusMessage');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const formData = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        subject: document.getElementById('subject').value.trim(),
+        message: document.getElementById('message').value.trim(),
+        reply_to: document.getElementById('email').value.trim()
+      };
+
+      // Validate form
+      if (!validateForm(formData)) return;
+
+      // Set loading state
+      setLoading(true);
+
+      try {
+        // Send email
+        await emailjs.send(
+          "service_t5qcgjv",
+          "template_f1tvom3",
+          formData
+        );
+        
+        // Success
+        showStatus('Message sent successfully!', 'success');
+        contactForm.reset();
+      } catch (error) {
+        console.error('Email send failed:', error);
+        showStatus('Failed to send message. Please try again.', 'error');
+      } finally {
+        setLoading(false);
       }
     });
-  };
-  
-  document.head.appendChild(script);
-}
+  }
 
-// Contact form submission handler
-async function handleFormSubmit(event) {
-  event.preventDefault();
-  
-  const form = event.target;
-  const formData = {
-    name: form.querySelector('#name').value.trim(),
-    email: form.querySelector('#email').value.trim(),
-    subject: form.querySelector('#subject').value.trim(),
-    message: form.querySelector('#message').value.trim(),
-    logo_url: "https://i.imgur.com/31ZeO6z.jpeg",
-    reply_to: form.querySelector('#email').value.trim(),
-    date: new Date().toLocaleString(),
-    user_agent: navigator.userAgent,
-    page_url: window.location.href
-  };
+  function validateForm(formData) {
+    // Clear previous status
+    statusMessage.style.display = 'none';
 
-  // Validate form before sending
-  if (!validateContactForm(formData)) return;
-
-  // UI feedback while sending
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const originalBtnText = submitBtn.innerHTML;
-  
-  submitBtn.innerHTML = `
-    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Sending...
-  `;
-  submitBtn.disabled = true;
-
-  // Timeout handler for slow responses
-  const emailTimeout = setTimeout(() => {
-    showStatusMessage('The server is taking longer than expected. Please wait...', 'warning');
-  }, 5000);
-
-  try {
-    // Send email using EmailJS
-    await emailjs.send(
-      'service_t5qcgjv',    // Service ID
-      'template_f1tvom3',   // Template ID
-      formData              // Form data
-    );
-    
-    clearTimeout(emailTimeout);
-    showStatusMessage('✅ Message sent! Check your email for confirmation.', 'success');
-    form.reset();
-    
-    // Google Analytics tracking (if available)
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'contact_form_submission', {
-        'event_category': 'engagement',
-        'event_label': 'Successful Contact Form Submission'
-      });
+    // Check required fields
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      showStatus('Please fill in all required fields', 'error');
+      return false;
     }
-  } catch (error) {
-    clearTimeout(emailTimeout);
-    
-    // Error handling
-    let errorMessage = '❌ Failed to send message. Please try again later.';
-    if (error.status === 400) {
-      errorMessage = '❌ Invalid form data. Please check your inputs.';
-    } else if (error.status === 429) {
-      errorMessage = '❌ Too many attempts. Please wait before trying again.';
-    }
-    
-    showStatusMessage(errorMessage, 'error');
-    
-    // Google Analytics error tracking
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'contact_form_error', {
-        'event_category': 'engagement',
-        'event_label': `Failed Submission: ${error.status || 'Unknown Error'}`
-      });
-    }
-  } finally {
-    // Restore original button state
-    submitBtn.innerHTML = originalBtnText;
-    submitBtn.disabled = false;
-  }
-}
 
-// Basic form validation
-function validateContactForm(formData) {
-  const errors = [];
-  
-  if (!formData.name) errors.push('Name is required');
-  if (!formData.email) errors.push('Email is required');
-  if (!formData.subject) errors.push('Subject is required');
-  if (!formData.message) errors.push('Message is required');
-  
-  if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    errors.push('Please enter a valid email address');
-  }
-  
-  if (formData.message && formData.message.length < 10) {
-    errors.push('Message should be at least 10 characters');
-  }
-  
-  if (errors.length > 0) {
-    showStatusMessage(errors.join('<br>'), 'error');
-    return false;
-  }
-  
-  return true;
-}
+    // Validate email format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      showStatus('Please enter a valid email address', 'error');
+      return false;
+    }
 
-// Helper function to display status messages
-function showStatusMessage(message, type) {
-  const statusElement = document.getElementById('statusMessage');
-  if (!statusElement) return;
-  
-  statusElement.innerHTML = message;
-  statusElement.className = type;
-  statusElement.style.display = 'block';
-  
-  // Auto-hide after 5 seconds (except errors)
-  if (type !== 'error') {
-    setTimeout(() => {
-      statusElement.style.display = 'none';
-    }, 5000);
+    return true;
   }
-}
+
+  function setLoading(isLoading) {
+    if (isLoading) {
+      submitBtn.disabled = true;
+      btnText.textContent = 'Sending...';
+      btnSpinner.classList.remove('hidden');
+    } else {
+      submitBtn.disabled = false;
+      btnText.textContent = 'Send Message';
+      btnSpinner.classList.add('hidden');
+    }
+  }
+
+  function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = `status-message ${type}`;
+    statusMessage.style.display = 'block';
+  }
+});
