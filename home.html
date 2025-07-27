@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <button class="menu-toggle">
-  <i class="fas fa-bars"></i>
-</button>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free Finder - Shop</title>
+  <title>Free Finder</title>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="module" src="nav-tracker.js"></script>
   <script type="module" src="script.js"></script>
@@ -16,7 +13,6 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 />
 </head>
-
 <body>
   <!-- Header -->
   <!-- Add this right after your <header> tag -->
@@ -34,7 +30,9 @@
     </button>
   </div>
 </div>
-
+<button class="menu-toggle">
+  <i class="fas fa-bars"></i>
+</button>
   <header>
     <div class="header-content">
       <div class="header-left">
@@ -50,7 +48,7 @@
       </div>
 
       <nav class="header-right">
-       <ul>
+          <ul>
           <li><a href="shop.html">SHOP</a></li>
           <li><a href="home.html">HOME</a></li>
           <li><a href="culture.html">CULTURE</a></li>
@@ -60,86 +58,52 @@
     </div>
   </header>
 
-  <!-- Shopping Section -->
+  <!-- Search Results -->
+  <div id="searchResults"></div>
+
+  <!-- Categories -->
   <section>
-    <h2>🛒 E-commerce & Shopping</h2>
+    <h2>🎬 Entertainment</h2>
     <div class="category-grid">
-      <a href="https://www.amazon.com/gp/goldbox" class="category-card">
-        <img src="images/0046.jpg" alt="Amazon Deals" />
-        <p>Amazon Daily Deals</p>
-      </a>
-      <a href="https://www.ebay.com/deals" class="category-card">
-        <img src="images/0047.jpg" alt="eBay Deals" />
-        <p>eBay Daily Deals</p>
-      </a>
-      <a href="https://www.groupon.com/" class="category-card">
-        <img src="images/0048.jpg" alt="Groupon" />
-        <p>Groupon Discounts</p>
-      </a>
-      <a href="https://www.retailmenot.com/" class="category-card">
-        <img src="images/0049.jpg" alt="RetailMeNot" />
-        <p>Coupon Codes</p>
-      </a>
-      <a href="https://www.honey.com/" class="category-card">
-        <img src="images/0050.jpg" alt="Honey" />
-        <p>Automatic Coupons</p>
-      </a>
-      <a href="https://www.rakuten.com/" class="category-card">
-        <img src="images/0051.jpg" alt="Rakuten" />
-        <p>Cashback Shopping</p>
-      </a>
+      <a href="https://swatchseries.is/" class="category-card"><img src="images/0001.jpg" alt="Free Movies"><p>Free Movies</p></a>
+      <a href="https://aniwatchtv.to/" class="category-card"><img src="images/0010.jpg" alt="Free Anime"><p>Free Anime</p></a>
+      <a href="https://tv.garden/at/" class="category-card"><img src="images/0009.jpg" alt="Free TV"><p>Free TV Channels</p></a>
+      <a href="https://topdocumentaryfilms.com/" class="category-card"><img src="images/0007.jpg" alt="Docs"><p>Free Documentaries</p></a>
+      <a href="https://freemusicarchive.org" class="category-card"><img src="images/0003.jpg" alt="Free Music" /><p>Free Music</p></a>
+      <a href="https://www.myabandonware.com" class="category-card"><img src="images/0002.jpg" alt="Free Games" /><p>Free Games</p></a>
     </div>
   </section>
 
   <section>
-    <h2>💰 Free Samples & Trials</h2>
+    <h2>📚 Learning & Reading</h2>
     <div class="category-grid">
-      <a href="https://www.freesamples.org/" class="category-card">
-        <img src="images/0052.jpg" alt="Free Samples" />
-        <p>Free Product Samples</p>
-      </a>
-      <a href="https://www.freestuff.com/" class="category-card">
-        <img src="images/0053.jpg" alt="Free Stuff" />
-        <p>Free Stuff Finder</p>
-      </a>
-      <a href="https://www.samplehound.com/" class="category-card">
-        <img src="images/0054.jpg" alt="Sample Hound" />
-        <p>Sample Hunting</p>
-      </a>
-      <a href="https://www.hunt4freebies.com/" class="category-card">
-        <img src="images/0055.jpg" alt="Hunt for Freebies" />
-        <p>Freebie Hunter</p>
-      </a>
+      <a href="https://www.gutenberg.org/" class="category-card"><img src="images/0004.jpg"><p>Free Books</p></a>
+      <a href="https://librivox.org/" class="category-card"><img src="images/0005.jpg"><p>Free Audiobooks</p></a>
+      <a href="https://www.edx.org/" class="category-card"><img src="images/0006.jpg"><p>Free Courses</p></a>
+      <a href="https://archive.org/" class="category-card"><img src="images/0011.jpg"><p>Free Libraries</p></a>
     </div>
   </section>
 
   <section>
-    <h2>🏪 Marketplace & Second-hand</h2>
+    <h2>🛠️ Software & Tools</h2>
     <div class="category-grid">
-      <a href="https://www.facebook.com/marketplace" class="category-card">
-        <img src="images/0056.jpg" alt="Facebook Marketplace" />
-        <p>Facebook Marketplace</p>
-      </a>
-      <a href="https://offerup.com/" class="category-card">
-        <img src="images/0057.jpg" alt="OfferUp" />
-        <p>OfferUp Local</p>
-      </a>
-      <a href="https://www.mercari.com/" class="category-card">
-        <img src="images/0058.jpg" alt="Mercari" />
-        <p>Mercari Marketplace</p>
-      </a>
-      <a href="https://www.craigslist.org/" class="category-card">
-        <img src="images/0059.jpg" alt="Craigslist" />
-        <p>Craigslist Classifieds</p>
-      </a>
-      <a href="https://www.goodwill.org/shop-online/" class="category-card">
-        <img src="images/0060.jpg" alt="Goodwill" />
-        <p>Goodwill Online</p>
-      </a>
-      <a href="https://www.thrifted.com/" class="category-card">
-        <img src="images/0061.jpg" alt="Thrifted" />
-        <p>Thrift Shopping</p>
-      </a>
+      <a href="https://ninite.com/" class="category-card"><img src="images/0008.jpg"><p>Free Software</p></a>
+      <a href="https://alternativeto.net/" class="category-card"><img src="images/0012.jpg"><p>Free Tools</p></a>
+      <a href="https://portableapps.com/" class="category-card"><img src="images/0016.jpg"><p>Portable Apps</p></a>
+      <a href="https://osalt.com/" class="category-card"><img src="images/0017.jpg"><p>Open Source Alternatives</p></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎨 Creative Assets</h2>
+    <div class="category-grid">
+      <a href="https://www.dafont.com/" class="category-card"><img src="images/0013.jpg"><p>Free Fonts</p></a>
+      <a href="https://www.pexels.com/" class="category-card"><img src="images/0014.jpg"><p>Free Stock Photos</p></a>
+      <a href="https://html5up.net/" class="category-card"><img src="images/0015.jpg"><p>Free Web Templates</p></a>
+      <a href="https://www.flaticon.com/" class="category-card"><img src="images/0018.jpg"><p>Free Icons</p></a>
+      <a href="https://www.canva.com/design-templates/" class="category-card"><img src="images/0019.jpg"><p>Design Templates</p></a>
+      <a href="https://www.mixkit.co/" class="category-card"><img src="images/0020.jpg"><p>Free Video Assets</p></a>
+      <a href="https://www.remove.bg/" class="category-card"><img src="images/0021.jpg"><p>Background Remover</p></a>
     </div>
   </section>
 
